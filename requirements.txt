@@ -1,6 +1,6 @@
-scikit-learn=1.4.1.post1
-pandas=2.1.4
-numpy=1.26.4
-ccxt=4.2.59
+scikit-learn==0.24.2
+pandas==2.1.4
+numpy==1.26.4
+ccxt==4.2.59
 matplotlib==3.8.3
-streamlit=1.31.1 
+streamlit==1.31.1 
