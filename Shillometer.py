@@ -398,7 +398,7 @@ def buy_signals_over_time(df, k_means_df):
     plt.show()
     st.pyplot(fig)
 
-def kmeans_pca(df):
+`def kmeans_pca(df):
     features = ['num_mentions', 'avg_sentiment_score', 'shill_score', '10_20_ema', '10_20_acc', '14d_RSI', '3d_change_CVD', 'AO', 'AC_CVD',
            'shill_score_7d_ema', 'avg_sentiment_score_7d_ema', 'num_mentions_7d_ema', 'BB_Width', 'P_vs_lower']
 
@@ -466,7 +466,7 @@ def kmeans_pca(df):
     plt.legend()
     plt.show()
     st.pyplot(fig)
-
+`
 
 
 #NB this is meant to ingest df_pca_kmeans
@@ -1230,7 +1230,9 @@ crypto_symbols_set = set(coins_list['Ticker'].str.upper()) # faster lookup
 coin_name = 'SOL'
 coin_name = st.sidebar.selectbox(
     'Select coin',
-    ('TON', 'SOL', 'RNDR', 'AKT', 'AVAX', 'TIA', 'STRD', 'LDO', 'FXS', 'MATIC', 'ETH', 'BTC', 'WIF', 'DOGE', 'BONK', 'DOT', 'XRP', 'EOS', 'DYDX', 'GMX')
+    ('TON', 'SOL', 'BNB', 'ATOM', 'AAVE', 'SNX', 'ADA', 'LINK', 'MKR', 'GMX',
+    'RNDR', 'AKT', 'AVAX', 'TIA', 'STRD', 'LDO', 'FXS', 'OP', 'ARB', 'UNI', 'RON', 'IMX', 
+    'MATIC', 'ETH', 'BTC', 'WIF', 'DOGE', 'BONK', 'DOT', 'XRP', 'EOS', 'DYDX', 'GMX')
 )
 
 
@@ -1348,23 +1350,23 @@ plt.xticks(rotation=90, fontsize=7) # Rotate the x-axis labels to show them clea
 plt.show()
 st.pyplot(fig)
 
-st.markdown("""
+#st.markdown("""
 ### Below, we show the top 50 coins by market cap. The table is designed to highlight coins which have triggered a top cluster today
 
 ### This is 'wen_top' = 0. If the coin has triggered a top cluster in the last week, wen_top shows you how many days ago
 
-The other metrics are:
+#The other metrics are:
 
-- 7d ema of average sentiment, shill score, number of mentions
-- AO shill = 5 dma shill score / 34 dma shill score - this gives a sense of magnitude and is designed to act like a z-score
-- 14d RSI - main momentum indicator 
-- 10_20_ema - 10day ema / 20 day ema - again a short term momentum indicator
-- 10_20_acc - 10_20_ema divided by its own 5 day ema - this is designed to pickup early changes in momentum
-- AC_CVD - CVD (cumulative volume delta, simlar to OBV ie a rough metric of price*volume) / 5 day average of CVD - this is basically a proxy on the pickup of short term bullish or bearish volume
-- P_vs_upper - price / upper Bollinger Band
-- P_vs_lower - price / lower Bollinger band
+#- 7d ema of average sentiment, shill score, number of mentions
+#- AO shill = 5 dma shill score / 34 dma shill score - this gives a sense of magnitude and is designed to act like a z-score
+#- 14d RSI - main momentum indicator 
+#- 10_20_ema - 10day ema / 20 day ema - again a short term momentum indicator
+#- 10_20_acc - 10_20_ema divided by its own 5 day ema - this is designed to pickup early changes in momentum
+#- AC_CVD - CVD (cumulative volume delta, simlar to OBV ie a rough metric of price*volume) / 5 day average of CVD - this is basically a proxy on the pickup of short term bullish or bearish volume
+#- P_vs_upper - price / upper Bollinger Band
+#- P_vs_lower - price / lower Bollinger band
 #
-""")
+#""")
 
 
 #landing = build_landing(25, coins_list_ex_usdt, df)
