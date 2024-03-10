@@ -466,7 +466,7 @@ def kmeans_pca(df):
     plt.legend()
     plt.show()
     st.pyplot(fig)
-`
+
 
 
 #NB this is meant to ingest df_pca_kmeans
