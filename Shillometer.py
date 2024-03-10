@@ -398,7 +398,7 @@ def buy_signals_over_time(df, k_means_df):
     plt.show()
     st.pyplot(fig)
 
-`def kmeans_pca(df):
+def kmeans_pca(df):
     features = ['num_mentions', 'avg_sentiment_score', 'shill_score', '10_20_ema', '10_20_acc', '14d_RSI', '3d_change_CVD', 'AO', 'AC_CVD',
            'shill_score_7d_ema', 'avg_sentiment_score_7d_ema', 'num_mentions_7d_ema', 'BB_Width', 'P_vs_lower']
 
