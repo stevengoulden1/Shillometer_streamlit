@@ -1451,16 +1451,16 @@ buy_signals_over_time(new_df, df_pca_kmeans)
 
 
 
-st.markdown("""
+#st.markdown("""
 ### Lastly, we backtest this strategy with a time based train test split
 
-This works by splitting the data into 30 test periods (roughly 2-4 weeks given the training period) and at each point, running the PCA and k-means algorithm and picking the most successful historical cluster, then holding for 28 days with a 10 percent stop loss
+#This works by splitting the data into 30 test periods (roughly 2-4 weeks given the training period) and at each point, running the PCA and k-means algorithm and picking the most successful historical cluster, then holding for 28 days with a 10 percent stop loss
 
 # 
-""")
-full_test_data = dynamic_label_return_strategy(df_pca_kmeans)
+#""")
+#full_test_data = dynamic_label_return_strategy(df_pca_kmeans)
 
-dynamic_label_return_strategy_plot(full_test_data)
+#dynamic_label_return_strategy_plot(full_test_data)
 
 
 
