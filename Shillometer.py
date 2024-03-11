@@ -47,6 +47,7 @@ import csv
 import time
 
 
+
 #Telegram and huggingface done in colab and then most recent file saved
 # This uses the file Shillometer_TG_HF.ipynb
 
@@ -66,7 +67,7 @@ st.markdown("""
 
 
 
-
+@st.cache_data
 def pull_prices(days, coin):
     exchange_id = 'binance'
     exchange_class = getattr(ccxt, exchange_id)
@@ -101,6 +102,7 @@ def pull_prices(days, coin):
     return df_prices
 
 #Coingecko pull prices for the on chain
+@st.cache_data
 def pull_prices_cg(days, coin):
     
     coin = coin.lower()
@@ -142,7 +144,7 @@ def pull_prices_cg(days, coin):
     
     
     return df_price
-
+@st.cache_data
 def fetch_cryptocurrencies(per_page=250):
     url = "https://api.coingecko.com/api/v3/coins/markets"
     page = 1
@@ -188,7 +190,7 @@ def merge_coin_prices(df, master, coin):
 
 
 #NB deleted original, this breaks all coin refs out from original list
-
+@st.cache_data
 def group_data(df):
     
     # Convert 'coin_mentions' from string representation of list to actual list
@@ -217,7 +219,7 @@ def group_data(df):
     return grouped_telegram_comments_data
 
 
-
+@st.cache_data
 def label_return_final(df):
 
     df['log_price'] = np.log(df['price'])
@@ -361,7 +363,7 @@ def label_return_final(df):
     return summary_sorted
     
 
-
+@st.cache_data
 def buy_signals_over_time(df, k_means_df):
     df['date'] = pd.to_datetime(df['date'])
     df.sort_values('date', inplace=True)
@@ -398,6 +400,7 @@ def buy_signals_over_time(df, k_means_df):
     plt.show()
     st.pyplot(fig)
 
+@st.cache_data
 def kmeans_pca(df):
     features = ['num_mentions', 'avg_sentiment_score', 'shill_score', '10_20_ema', '10_20_acc', '14d_RSI', '3d_change_CVD', 'AO', 'AC_CVD',
            'shill_score_7d_ema', 'avg_sentiment_score_7d_ema', 'num_mentions_7d_ema', 'BB_Width', 'P_vs_lower']
@@ -470,6 +473,7 @@ def kmeans_pca(df):
 
 
 #NB this is meant to ingest df_pca_kmeans
+@st.cache_data
 def dynamic_label_return_strategy(df):
     tscv = TimeSeriesSplit(n_splits=20)
     overall_returns = []
@@ -683,7 +687,7 @@ def dynamic_label_return_strategy_plot(df):
 
 #
 
-
+@st.cache_data
 def coin_df(days, coin, df):
     df['date'] = pd.to_datetime(df[' message.date']).dt.date
 
@@ -824,6 +828,7 @@ def coin_df(days, coin, df):
     return df   
 
 #The below pulls from cg for the shill chart
+@st.cache_data
 def coin_df_cg(days, coin, df):
 
     grouped_telegram_comments_data = group_data(df)
@@ -961,8 +966,9 @@ def coin_df_cg(days, coin, df):
     df['avg_sentiment_score_7d_ema'] = df['avg_sentiment_score'].ewm(span=7, adjust=False).mean()
     df['num_mentions_7d_ema'] = df['num_mentions'].ewm(span=7, adjust=False).mean()
 
-    return df  
+    return df 
 
+@st.cache_data
 def shill_chart(df):
     # Plot the data
     plt.style.use('dark_background')
@@ -1312,7 +1318,7 @@ bars = ax.bar(recent_data_sorted_desc['coin_mentions'], recent_data_sorted_desc[
 ax.set_xlabel('Coins', color='white')
 ax.set_ylabel('Shill Score', color='white')
 ax.set_title("Today's Shill Score by Coin", color='white')
-ax.tick_params(axis='x', rotation=90, colors='white') # Rotate the x-axis labels and set their color to white
+ax.tick_params(axis='x', rotation=45, colors='white') # Rotate the x-axis labels and set their color to white
 ax.tick_params(axis='y', colors='white') # Set y-axis tick colors to white
 
 # You can set the edge color of the bars if needed
@@ -1340,13 +1346,13 @@ most_recent_week = weekly_data['week'].max()
 recent_weekly_data = weekly_data[weekly_data['week'] == most_recent_week]
 recent_weekly_data_sorted_desc = recent_weekly_data.sort_values(by='Weekly Shill score', ascending=False)
 
-# Plot bar chart for the most recent wee
+# Plot bar chart for the most recent week
 fig = plt.figure(figsize=(10,6))
 plt.bar(recent_weekly_data_sorted_desc['coin_mentions'], recent_weekly_data_sorted_desc['Weekly Shill score'])
 plt.xlabel('Coins')
-plt.ylabel('Weekly Shill Score ')
+plt.ylabel('Weekly Shill Score')
 plt.title('Weekly Shill Score by Coin')
-plt.xticks(rotation=90, fontsize=7) # Rotate the x-axis labels to show them clearly
+plt.xticks(rotation=45, fontsize=6) # Rotate the x-axis labels to show them clearly
 plt.show()
 st.pyplot(fig)
 
@@ -1451,16 +1457,16 @@ buy_signals_over_time(new_df, df_pca_kmeans)
 
 
 
-#st.markdown("""
+st.markdown("""
 ### Lastly, we backtest this strategy with a time based train test split
 
 #This works by splitting the data into 30 test periods (roughly 2-4 weeks given the training period) and at each point, running the PCA and k-means algorithm and picking the most successful historical cluster, then holding for 28 days with a 10 percent stop loss
 
 # 
 #""")
-#full_test_data = dynamic_label_return_strategy(df_pca_kmeans)
+full_test_data = dynamic_label_return_strategy(df_pca_kmeans)
 
-#dynamic_label_return_strategy_plot(full_test_data)
+dynamic_label_return_strategy_plot(full_test_data)
 
 
 
