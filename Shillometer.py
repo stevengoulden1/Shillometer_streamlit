@@ -61,6 +61,8 @@ st.markdown("""
 
 ### We combine this with technical indicators and use k-means clustering and PCA to identify the high conviction entry points
 
+### DYOR/ Not Financial Advice!
+
 ### First off, here are the best and worst shills today and this week
 
 """)
